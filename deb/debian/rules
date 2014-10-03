@@ -1,0 +1,51 @@
+#!/usr/bin/make -f
+# Percona Agent makefile
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+CWD = $(CURDIR)
+TMP = $(CURDIR)/debian/percona-agent
+VENDOR_DIR = $(CURDIR)/vendor
+export GOPATH := $(VENDOR_DIR):$(CURDIR)
+REV = $(shell git rev-parse HEAD)
+#VER = $(shell awk '/var VERSION/ {print $$5}' agent/agent.go | sed 's/"//g')
+
+
+%:
+	dh $@ 
+
+clean:
+	rm -rf $(CWD)/src
+	rm -rf $(CWD)/vendor
+	rm -rf $(TMP)
+	rm -f build/agent-build/agent-build
+	rm -f bin/percona-agent/percona-agent
+	rm -f bin/percona-agent-installer/percona-agent-installer
+
+override_dh_auto_build:
+	dh_testdir
+
+	# Create a symlink so that build util finds a go package
+	mkdir -p src/github.com/percona
+	ln -s $(CWD) src/github.com/percona/percona-agent
+
+	# Build a util for downloading dependencies
+	(cd build/agent-build && go build)
+
+	# Download dependencies
+	(cd build/agent-build && ./agent-build -build=false)
+
+	# Build percona-agent
+	(cd bin/percona-agent && go build -ldflags "-X github.com/percona/percona-agent/agent.REVISION $(REV)")
+
+	# Check that bin was compiled with pkgs from vendor dir
+	strings bin/percona-agent/percona-agent | grep "$(VENDOR_DIR)/src/github.com/percona/cloud-protocol" || exit 1
+
+	# Build percona-agent-installer
+	(cd bin/percona-agent-installer && go build)
+
+# override_dh_installinit:
+# 	dh_installinit --onlyscripts
+
+override_dh_usrlocal:

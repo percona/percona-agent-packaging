@@ -1,0 +1,23 @@
+Source: percona-agent
+Section: utilities
+Priority: extra
+Maintainer: Percona Development Team <mysql-dev@percona.com>
+Uploaders: Tomislav Plavcic <tomislav.plavcic@percona.com>
+Build-Depends: debhelper (>= 7.0.50~),
+               golang-go (>= 1.3),
+               mercurial,
+               git
+Standards-Version: 3.9.4
+Homepage: https://github.com/percona/percona-agent
+
+
+Package: percona-agent
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends},
+Description: Percona Agent binaries
+ This is percona-agent for Percona Cloud Tools. It's a real-time client-side 
+ agent written in Go which implements the various services provided by 
+ Percona Cloud Tools (PCT). You need a PCT account to install and use the agent.
+ .
+ This package includes the percona-agent binaries.
+
