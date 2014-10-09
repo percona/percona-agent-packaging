@@ -14,7 +14,7 @@ Source:       %{SRC_DIR}.tar.gz
 Group:        System Environment/Base
 BuildRoot:    %{_tmppath}/%{name}-%{version}-%{release}-%{_arch}
 Packager:     Percona Development Team <mysqldev@percona.com>
-BuildRequires:  golang-go >= 1.3, git, mercurial
+BuildRequires:  golang >= 1.3, git, mercurial
 
 %description
 This is percona-agent for Percona Cloud Tools. It's a real-time client-side 
