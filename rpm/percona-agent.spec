@@ -1,6 +1,7 @@
 %define version @@VERSION@@
 %define release @@RELEASE@@
 %define revision @@REVISION@@
+%define debug_package %{nil}
 %define SRC_DIR percona-agent-%{version}
 %define CWD %{_builddir}/%{SRC_DIR}
 %define VENDOR_DIR %{CWD}/vendor
