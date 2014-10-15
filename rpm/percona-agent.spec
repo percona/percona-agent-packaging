@@ -5,7 +5,7 @@
 %define SRC_DIR percona-agent-%{version}
 %define CWD %{_builddir}/%{SRC_DIR}
 %define VENDOR_DIR %{CWD}/vendor
-%define service-name percona-agent
+%define service_name percona-agent
 %define basedir /usr/local/percona
 
 Name:         percona-agent
@@ -80,10 +80,10 @@ if [ $1 = 1 ] ; then
 	echo "Percona Agent is installed but not configured and started."
     echo ""
 	echo "Run the following command with root permissions to configure (replace values as needed):"
-	echo "/usr/local/percona/percona-agent/bin/percona-agent-installer -mysql-user=root -mysql-pass=mysql_root_pass -api-key=your_key_here"
+	echo "  /usr/local/percona/percona-agent/bin/percona-agent-installer -mysql-user=root -mysql-pass=mysql_root_pass -api-key=your_key_here"
     echo ""
 	echo "To start the service run following:"
-	echo "service percona-agent start";
+	echo "  service percona-agent start";
     echo "================================================================================"
     echo ""
 fi
@@ -98,7 +98,7 @@ fi
 
 # If uninstall remove basedir
 if [ $1 = 0 ] ; then
-    rm -rf %{basedir}/%{service-name}
+    rm -rf %{basedir}/%{service_name}
 fi
 
 %preun
