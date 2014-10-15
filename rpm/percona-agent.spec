@@ -5,6 +5,8 @@
 %define SRC_DIR percona-agent-%{version}
 %define CWD %{_builddir}/%{SRC_DIR}
 %define VENDOR_DIR %{CWD}/vendor
+%define service-name percona-agent
+%define basedir /usr/local/percona
 
 Name:         percona-agent
 Version:      %{version}
@@ -73,19 +75,30 @@ fi
 
 # On initial installation show message about configuring and starting
 if [ $1 = 1 ] ; then
+    echo ""
+    echo "================================================================================"
 	echo "Percona Agent is installed but not configured and started."
-	echo "Run the following command with root permissions and insert your api-key to configure:"
-	echo "/usr/local/percona/percona-agent/bin/percona-agent-installer -basedir=/usr/local/percona/percona-agent -api-key=your_key_here"
-	echo "Then start service:"
+    echo ""
+	echo "Run the following command with root permissions to configure (replace values as needed):"
+	echo "/usr/local/percona/percona-agent/bin/percona-agent-installer -mysql-user=root -mysql-pass=mysql_root_pass -api-key=your_key_here"
+    echo ""
+	echo "To start the service run following:"
 	echo "service percona-agent start";
+    echo "================================================================================"
+    echo ""
 fi
 
 %postun
 # Start Percona Agent after upgrade
-if [ "$1" -ge "1" ] ; then
+if [ $1 -ge 1 ] ; then
 	if [ -x %{_sysconfdir}/init.d/percona-agent ] ; then
 	        %{_sysconfdir}/init.d/percona-agent start > /dev/null
 	fi
+fi
+
+# If uninstall remove basedir
+if [ $1 = 0 ] ; then
+    rm -rf %{basedir}/%{service-name}
 fi
 
 %preun
