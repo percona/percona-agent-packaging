@@ -6,8 +6,9 @@ BASEDIR="${PERCONA_PREFIX}/percona/${SERVICE_NAME}"
 
 case "$1" in
 	remove|purge)
-		# delete basedir
+		# delete basedir and init script
 		rm -rf ${BASEDIR}
+		rm -f /etc/init.d/${SERVICE_NAME}
 	;;
 
 	upgrade)
