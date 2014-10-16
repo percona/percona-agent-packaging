@@ -9,7 +9,7 @@ case "$1" in
 		# delete non config files which are not automatically removed
 		rm -rf ${BASEDIR}/data
 		rm -rf ${BASEDIR}/trash
-		rm -rf ${BASEDIR}/*.log
+		rm -f ${BASEDIR}/*.log
 	;;
 
 	purge)

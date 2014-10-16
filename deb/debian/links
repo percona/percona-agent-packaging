@@ -1,0 +1,2 @@
+/usr/local/percona/percona-agent/bin/percona-agent /usr/bin/percona-agent
+/usr/local/percona/percona-agent/bin/percona-agent-installer /usr/bin/percona-agent-installer
