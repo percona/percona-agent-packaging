@@ -8,7 +8,6 @@ case "$1" in
 	remove|purge)
 		# delete basedir and init script
 		rm -rf ${BASEDIR}
-		rm -f /etc/init.d/${SERVICE_NAME}
 	;;
 
 	upgrade)
