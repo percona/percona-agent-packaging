@@ -164,6 +164,8 @@ fi
 %doc COPYING README.md Changelog Authors
 %attr(755, root, root) %{_prefix}/local/percona/percona-agent/bin/percona-agent
 %attr(755, root, root) %{_prefix}/local/percona/percona-agent/bin/percona-agent-installer
+%attr(755, root, root) %{_sbindir}/percona-agent
+%attr(755, root, root) %{_sbindir}/percona-agent-installer
 %if 0%{?systemd}
 %attr(0644, root, root) %{_unitdir}/percona-agent.service
 %else
