@@ -77,6 +77,9 @@ strings bin/percona-agent/percona-agent | grep "%{VENDOR_DIR}/src/github.com/per
 (cd bin/percona-agent-installer && go build)
 
 %install
+# Ensure that needed directories exists
+install -d $RBR%{_sbindir}
+
 %{__install} -D -m 755 %{CWD}/bin/percona-agent/percona-agent %{buildroot}/usr/local/percona/percona-agent/bin/percona-agent
 %{__install} -D -m 755 %{CWD}/bin/percona-agent-installer/percona-agent-installer %{buildroot}/usr/local/percona/percona-agent/bin/percona-agent-installer
 
@@ -89,12 +92,6 @@ strings bin/percona-agent/percona-agent | grep "%{VENDOR_DIR}/src/github.com/per
 # create symlinks for binaries
 ln -s %{buildroot}/usr/local/percona/percona-agent/bin/percona-agent %{buildroot}/%{_sbindir}/percona-agent
 ln -s %{buildroot}/usr/local/percona/percona-agent/bin/percona-agent-installer %{buildroot}/%{_sbindir}/percona-agent-installer
-
-%files
-%doc COPYING README.md Changelog Authors
-%attr(755, root, root) /usr/local/percona/percona-agent/bin/percona-agent
-%attr(755, root, root) /usr/local/percona/percona-agent/bin/percona-agent-installer
-%attr(755, root, root) %{_sysconfdir}/init.d/percona-agent
 
 %post
 %if 0%{?systemd}
@@ -161,6 +158,16 @@ if [ $1 = 0 ] ; then
             fi
     fi
 fi
+%endif
+
+%files
+%doc COPYING README.md Changelog Authors
+%attr(755, root, root) /usr/local/percona/percona-agent/bin/percona-agent
+%attr(755, root, root) /usr/local/percona/percona-agent/bin/percona-agent-installer
+%if 0%{?systemd}
+%attr(0644, root, root) %{_unitdir}/percona-agent.service
+%else
+%attr(755, root, root) %{_sysconfdir}/init.d/percona-agent
 %endif
 
 %changelog
