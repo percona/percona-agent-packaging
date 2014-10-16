@@ -1,0 +1,20 @@
+#
+# Systemd service file for Percona Agent
+#
+
+[Unit]
+Description=Percona Agent
+After=network.target
+After=syslog.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=simple
+
+# Start main service
+ExecStart=/usr/sbin/percona-agent
+
+# Give up if ping don't get an answer
+TimeoutSec=300
