@@ -16,6 +16,8 @@ case "$1" in
 		# remove symlinks for service
 		if which update-rc.d >/dev/null 2>&1; then
 	     	update-rc.d percona-agent remove >/dev/null
+	    elif which chkconfig >/dev/null 2>&1; then
+            chkconfig --del percona-agent >/dev/null
 	    fi
 
 		# delete all files including config

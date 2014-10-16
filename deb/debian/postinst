@@ -6,6 +6,8 @@ case "$1" in
         	# update symlinks for service but don't start
         	if which update-rc.d >/dev/null 2>&1; then
         		update-rc.d percona-agent defaults >/dev/null
+            elif which chkconfig >/dev/null 2>&1; then
+                chkconfig --add percona-agent >/dev/null
         	fi
 
         	# if first install show message for initial configuration
@@ -24,6 +26,8 @@ case "$1" in
         	# update symlinks for service
         	if which update-rc.d >/dev/null 2>&1; then
         		update-rc.d percona-agent defaults >/dev/null
+            elif which chkconfig >/dev/null 2>&1; then
+                chkconfig --add percona-agent >/dev/null
         	fi
 
    		    # if upgrade start service
