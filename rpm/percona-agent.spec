@@ -58,6 +58,10 @@ strings bin/percona-agent/percona-agent | grep "%{VENDOR_DIR}/src/github.com/per
 %{__install} -D -m 755 %{CWD}/bin/percona-agent-installer/percona-agent-installer %{buildroot}/usr/local/percona/percona-agent/bin/percona-agent-installer
 %{__install} -D -m 755 %{CWD}/install/percona-agent %{buildroot}/%{_sysconfdir}/init.d/percona-agent
 
+# create symlinks for binaries
+ln -s %{buildroot}/usr/local/percona/percona-agent/bin/percona-agent %{buildroot}/%{_sbindir}/percona-agent
+ln -s %{buildroot}/usr/local/percona/percona-agent/bin/percona-agent-installer %{buildroot}/%{_sbindir}/percona-agent-installer
+
 %files
 %doc COPYING README.md Changelog Authors
 %attr(755, root, root) /usr/local/percona/percona-agent/bin/percona-agent
@@ -80,7 +84,7 @@ if [ $1 = 1 ] ; then
 	echo "Percona Agent is installed but not configured and started."
     echo ""
 	echo "Run the following command with root permissions to configure (replace values as needed):"
-	echo "  /usr/local/percona/percona-agent/bin/percona-agent-installer -mysql-user=root -mysql-pass=mysql_root_pass -api-key=your_key_here"
+	echo "  percona-agent-installer -mysql-user=root -mysql-pass=mysql_root_pass -api-key=your_key_here"
     echo ""
 	echo "To start the service run following:"
 	echo "  service percona-agent start";
