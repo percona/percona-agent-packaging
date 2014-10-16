@@ -78,7 +78,7 @@ strings bin/percona-agent/percona-agent | grep "%{VENDOR_DIR}/src/github.com/per
 
 %install
 # Ensure that needed directories exists
-install -d $RBR%{_sbindir}
+install -d %{buildroot}/%{_sbindir}
 
 %{__install} -D -m 755 %{CWD}/bin/percona-agent/percona-agent %{buildroot}/usr/local/percona/percona-agent/bin/percona-agent
 %{__install} -D -m 755 %{CWD}/bin/percona-agent-installer/percona-agent-installer %{buildroot}/usr/local/percona/percona-agent/bin/percona-agent-installer
@@ -162,8 +162,8 @@ fi
 
 %files
 %doc COPYING README.md Changelog Authors
-%attr(755, root, root) /usr/local/percona/percona-agent/bin/percona-agent
-%attr(755, root, root) /usr/local/percona/percona-agent/bin/percona-agent-installer
+%attr(755, root, root) %{_prefix}/local/percona/percona-agent/bin/percona-agent
+%attr(755, root, root) %{_prefix}/local/percona/percona-agent/bin/percona-agent-installer
 %if 0%{?systemd}
 %attr(0644, root, root) %{_unitdir}/percona-agent.service
 %else
