@@ -90,8 +90,8 @@ install -d %{buildroot}/%{_sbindir}
 %endif
 
 # create symlinks for binaries
-ln -s %{buildroot}/usr/local/percona/percona-agent/bin/percona-agent %{buildroot}/%{_sbindir}/percona-agent
-ln -s %{buildroot}/usr/local/percona/percona-agent/bin/percona-agent-installer %{buildroot}/%{_sbindir}/percona-agent-installer
+ln -s %{_prefix}/local/percona/percona-agent/bin/percona-agent %{buildroot}/%{_sbindir}/percona-agent
+ln -s %{_prefix}/local/percona/percona-agent/bin/percona-agent-installer %{buildroot}/%{_sbindir}/percona-agent-installer
 
 %post
 %if 0%{?systemd}
