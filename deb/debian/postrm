@@ -15,7 +15,7 @@ case "$1" in
 	purge)
 		# remove symlinks for service
 		if which update-rc.d >/dev/null 2>&1; then
-	     	update-rc.d percona-agent remove
+	     	update-rc.d percona-agent remove >/dev/null
 	    fi
 
 		# delete all files including config

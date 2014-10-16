@@ -5,7 +5,7 @@ case "$1" in
         if [ -z "$2" ]; then
         	# update symlinks for service but don't start
         	if which update-rc.d >/dev/null 2>&1; then
-        		update-rc.d percona-agent defaults
+        		update-rc.d percona-agent defaults >/dev/null
         	fi
 
         	# if first install show message for initial configuration
@@ -23,7 +23,7 @@ case "$1" in
         else
         	# update symlinks for service
         	if which update-rc.d >/dev/null 2>&1; then
-        		update-rc.d percona-agent defaults
+        		update-rc.d percona-agent defaults >/dev/null
         	fi
 
    		    # if upgrade start service
