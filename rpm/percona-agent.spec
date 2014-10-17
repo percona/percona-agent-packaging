@@ -112,13 +112,17 @@ ln -s %{_prefix}/local/percona/percona-agent/bin/percona-agent-installer %{build
 if [ $1 = 1 ] ; then
     echo ""
     echo "================================================================================"
-	echo "Percona Agent is installed but not configured and started."
+  	echo "Percona Agent is installed but not configured and started."
     echo ""
-	echo "Run the following command with root permissions to configure (replace values as needed):"
-	echo "  percona-agent-installer -mysql-user=root -mysql-pass=mysql_root_pass -api-key=your_key_here"
+  	echo "Run the following command with root permissions to configure (replace values as needed):"
+	  echo "  percona-agent-installer -mysql-user=root -mysql-pass=mysql_root_pass -api-key=your_key_here"
     echo ""
-	echo "To start the service run following:"
-	echo "  service percona-agent start";
+	  echo "To start the service run following:"
+%if 0%{?systemd}
+    echo "  systemctl start percona-agent"
+%else
+	  echo "  service percona-agent start"
+%endif
     echo "================================================================================"
     echo ""
 fi
