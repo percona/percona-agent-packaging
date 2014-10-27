@@ -8,18 +8,6 @@
 %define service_name percona-agent
 %define basedir /usr/local/percona
 
-%bcond_with systemd
-#
-%if %{with systemd}
-  %define systemd 1
-%else
-  %if 0%{?rhel} > 6
-    %define systemd 1
-  %else
-    %define systemd 0
-  %endif
-%endif
-
 Name:         percona-agent
 Version:      %{version}
 Release:      %{release}%{?dist}
@@ -31,16 +19,9 @@ Group:        System Environment/Base
 BuildRoot:    %{_tmppath}/%{name}-%{version}-%{release}-%{_arch}
 Packager:     Percona Development Team <mysqldev@percona.com>
 BuildRequires:  golang >= 1.3, git, mercurial
-%if 0%{?systemd}
-BuildRequires:  systemd
-Requires(post):   systemd
-Requires(preun):  systemd
-Requires(postun): systemd
-%else
 Requires(post):   /sbin/chkconfig
 Requires(preun):  /sbin/chkconfig
 Requires(preun):  /sbin/service
-%endif
 
 %description
 This is percona-agent for Percona Cloud Tools. It's a real-time client-side 
@@ -82,31 +63,20 @@ install -d %{buildroot}/%{_sbindir}
 
 %{__install} -D -m 755 %{CWD}/bin/percona-agent/percona-agent %{buildroot}/usr/local/percona/percona-agent/bin/percona-agent
 %{__install} -D -m 755 %{CWD}/bin/percona-agent-installer/percona-agent-installer %{buildroot}/usr/local/percona/percona-agent/bin/percona-agent-installer
-
-%if 0%{?systemd}
-%{__install} -D -m 0644 %{SOURCE1} %{buildroot}/%{_unitdir}/percona-agent.service
-%else
 %{__install} -D -m 755 %{CWD}/install/percona-agent %{buildroot}/%{_sysconfdir}/init.d/percona-agent
-%endif
 
 # create symlinks for binaries
 ln -s %{_prefix}/local/percona/percona-agent/bin/percona-agent %{buildroot}/%{_sbindir}/percona-agent
 ln -s %{_prefix}/local/percona/percona-agent/bin/percona-agent-installer %{buildroot}/%{_sbindir}/percona-agent-installer
 
 %post
-%if 0%{?systemd}
-  if [ -x %{_bindir}/systemctl ] ; then
-    %{_bindir}/systemctl enable percona-agent >/dev/null 2>&1
-  fi
-%else
-  # Add the init script but do not start agent right away
-  if [ -x /sbin/chkconfig ] ; then
-    /sbin/chkconfig --add percona-agent
-  # use insserv for older SuSE Linux versions
-  elif [ -x /sbin/insserv ] ; then
-    /sbin/insserv %{_sysconfdir}/init.d/percona-agent
-  fi
-%endif
+# Add the init script but do not start agent right away
+if [ -x /sbin/chkconfig ] ; then
+  /sbin/chkconfig --add percona-agent
+# use insserv for older SuSE Linux versions
+elif [ -x /sbin/insserv ] ; then
+  /sbin/insserv %{_sysconfdir}/init.d/percona-agent
+fi
 
 # On initial installation show message about configuring and starting
 if [ $1 = 1 ] ; then
@@ -117,27 +87,19 @@ if [ $1 = 1 ] ; then
   	echo "Run the following command with root permissions to configure (replace values as needed):"
 	  echo "  percona-agent-installer -mysql-user=root -mysql-pass=mysql_root_pass -api-key=your_key_here"
     echo ""
-	  echo "To start the service run following:"
-%if 0%{?systemd}
-    echo "  systemctl start percona-agent"
-%else
+	  echo "To start the service run following with root permissions:"
 	  echo "  service percona-agent start"
-%endif
     echo "================================================================================"
     echo ""
 fi
 
 %postun
 # Start Percona Agent after upgrade
-%if 0%{?systemd}
-%systemd_postun_with_restart percona-agent
-%else
 if [ $1 -ge 1 ] ; then
     if [ -x %{_sysconfdir}/init.d/percona-agent ] ; then
             %{_sysconfdir}/init.d/percona-agent start > /dev/null
     fi
 fi
-%endif
 
 # If uninstall remove basedir
 if [ $1 = 0 ] ; then
@@ -145,9 +107,6 @@ if [ $1 = 0 ] ; then
 fi
 
 %preun
-%if 0%{?systemd}
-    %systemd_preun percona-agent
-%else
 if [ $1 = 0 ] ; then
     # Stop Percona Agent before uninstalling it
     if [ -x %{_sysconfdir}/init.d/percona-agent ] ; then
@@ -162,7 +121,6 @@ if [ $1 = 0 ] ; then
             fi
     fi
 fi
-%endif
 
 %files
 %doc COPYING README.md Changelog Authors
@@ -170,11 +128,7 @@ fi
 %attr(755, root, root) %{_prefix}/local/percona/percona-agent/bin/percona-agent-installer
 %attr(755, root, root) %{_sbindir}/percona-agent
 %attr(755, root, root) %{_sbindir}/percona-agent-installer
-%if 0%{?systemd}
-%attr(0644, root, root) %{_unitdir}/percona-agent.service
-%else
 %attr(755, root, root) %{_sysconfdir}/init.d/percona-agent
-%endif
 
 %changelog
 * Fri Sep 26 2014 Tomislav Plavcic <tomislav.plavcic@percona.com>
