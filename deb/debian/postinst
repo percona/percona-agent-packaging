@@ -3,11 +3,11 @@
 case "$1" in
     configure)
         # update symlinks for service
-        if which update-rc.d >/dev/null 2>&1; then
-            update-rc.d percona-agent defaults >/dev/null
-        elif which chkconfig >/dev/null 2>&1; then
-            chkconfig --add percona-agent >/dev/null
-        fi
+        #if which update-rc.d >/dev/null 2>&1; then
+        #    update-rc.d percona-agent defaults >/dev/null
+        #elif which chkconfig >/dev/null 2>&1; then
+        #    chkconfig --add percona-agent >/dev/null
+        #fi
 
         if [ -z "$2" ]; then
         	# if first install show message for initial configuration
@@ -23,7 +23,7 @@ case "$1" in
 			echo "================================================================================"
 			echo ""
         else
-   		    # if upgrade start service
+   		# if upgrade start service
         	if which invoke-rc.d >/dev/null 2>&1; then
 	     		invoke-rc.d percona-agent start
 	     	else

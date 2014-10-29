@@ -71,12 +71,12 @@ ln -s %{_prefix}/local/percona/percona-agent/bin/percona-agent-installer %{build
 
 %post
 # Add the init script but do not start agent right away
-if [ -x /sbin/chkconfig ] ; then
-  /sbin/chkconfig --add percona-agent
+#if [ -x /sbin/chkconfig ] ; then
+#  /sbin/chkconfig --add percona-agent
 # use insserv for older SuSE Linux versions
-elif [ -x /sbin/insserv ] ; then
-  /sbin/insserv %{_sysconfdir}/init.d/percona-agent
-fi
+#elif [ -x /sbin/insserv ] ; then
+#  /sbin/insserv %{_sysconfdir}/init.d/percona-agent
+#fi
 
 # On initial installation show message about configuring and starting
 if [ $1 = 1 ] ; then
