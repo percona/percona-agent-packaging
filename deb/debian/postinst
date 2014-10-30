@@ -22,7 +22,7 @@ case "$1" in
             echo "  service percona-agent start"
             echo ""
             echo "To start the service automatically run following with root permissions:"
-            echo "  chkconfig percona-agent on"
+            echo "  update-rc.d percona-agent defaults"
             echo "================================================================================"
             echo ""
         else
