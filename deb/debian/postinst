@@ -10,18 +10,21 @@ case "$1" in
         #fi
 
         if [ -z "$2" ]; then
-        	# if first install show message for initial configuration
-        	echo ""
-			echo "================================================================================"
-			echo "Percona Agent is installed but not configured and started."
-			echo ""
-			echo "Run the following command with root permissions to configure (replace values as needed):"
-			echo "  percona-agent-installer -mysql-user=root -mysql-pass=mysql_root_pass -api-key=your_key_here"
-			echo ""
-			echo "To start the service run following:"
-			echo "  service percona-agent start";
-			echo "================================================================================"
-			echo ""
+            # if first install show message for initial configuration
+            echo ""
+            echo "================================================================================"
+            echo "Percona Agent is installed but not configured and started."
+            echo ""
+            echo "Run the following command with root permissions to configure (replace values as needed):"
+            echo "  percona-agent-installer -mysql-user=root -mysql-pass=mysql_root_pass -api-key=your_key_here"
+            echo ""
+            echo "To start the service run following with root permissions:"
+            echo "  service percona-agent start"
+            echo ""
+            echo "To start the service automatically run following with root permissions:"
+            echo "  chkconfig percona-agent on"
+            echo "================================================================================"
+            echo ""
         else
    		# if upgrade start service
         	if which invoke-rc.d >/dev/null 2>&1; then
