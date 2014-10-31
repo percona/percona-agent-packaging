@@ -28,9 +28,9 @@ esac
 
 # remove symlinks for service
 if which update-rc.d >/dev/null 2>&1; then
- 	update-rc.d percona-agent remove >/dev/null
+    update-rc.d -f percona-agent remove >/dev/null
 elif which chkconfig >/dev/null 2>&1; then
-    chkconfig --del percona-agent >/dev/null
+    chkconfig -f --del percona-agent >/dev/null
 fi
 
 # dh_installdeb will replace this with shell code automatically

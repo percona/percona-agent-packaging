@@ -1,6 +1,6 @@
 Source: percona-agent
-Section: utilities
-Priority: extra
+Section: admin
+Priority: optional
 Maintainer: Percona Development Team <mysql-dev@percona.com>
 Uploaders: Tomislav Plavcic <tomislav.plavcic@percona.com>
 Build-Depends: debhelper (>= 7.0.50~),
@@ -20,4 +20,3 @@ Description: Percona Agent binaries
  Percona Cloud Tools (PCT). You need a PCT account to install and use the agent.
  .
  This package includes the percona-agent binaries.
-

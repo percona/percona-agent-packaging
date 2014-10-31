@@ -12,9 +12,8 @@ Name:         percona-agent
 Version:      %{version}
 Release:      %{release}%{?dist}
 Summary:      Percona Agent for Percona Cloud Tools
-License:      GPL-3.0+
-Source0:       %{SRC_DIR}.tar.gz
-Source1:      percona-agent.service
+License:      GPLv3+
+Source0:      %{SRC_DIR}.tar.gz
 Group:        System Environment/Base
 BuildRoot:    %{_tmppath}/%{name}-%{version}-%{release}-%{_arch}
 Packager:     Percona Development Team <mysqldev@percona.com>
