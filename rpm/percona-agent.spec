@@ -12,7 +12,7 @@ Name:         percona-agent
 Version:      %{version}
 Release:      %{release}%{?dist}
 Summary:      Percona Agent for Percona Cloud Tools
-License:      GPLv3+
+License:      AGPLv3
 Source0:      %{SRC_DIR}.tar.gz
 Group:        System Environment/Base
 BuildRoot:    %{_tmppath}/%{name}-%{version}-%{release}-%{_arch}
@@ -24,8 +24,8 @@ Requires(preun):  /sbin/service
 
 %description
 This is percona-agent for Percona Cloud Tools. It's a real-time client-side 
-agent written in Go which implements the various services provided by 
-Percona Cloud Tools (PCT). You need a PCT account to install and use the agent.
+agent which implements the various services provided by Percona Cloud Tools (PCT).
+You need a PCT account to install and use the agent.
 
 %clean
 %{__rm} -rf %{buildroot}
