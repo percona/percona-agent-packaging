@@ -61,7 +61,7 @@ strings bin/percona-agent/percona-agent | grep "%{VENDOR_DIR}/src/github.com/per
 install -d %{buildroot}/%{_sbindir}
 
 %{__install} -D -m 755 %{CWD}/bin/percona-agent/percona-agent %{buildroot}/%{_sbindir}/percona-agent
-%{__install} -D -m 755 %{CWD}/bin/percona-agent-installer/percona-agent-installer %{buildroot}/%{_sbindir}/percona-agent-installer
+%{__install} -D -m 755 %{CWD}/bin/percona-agent-installer/percona-agent-installer %{buildroot}/%{_bindir}/percona-agent-installer
 %{__install} -D -m 755 %{CWD}/install/percona-agent %{buildroot}/%{_sysconfdir}/init.d/percona-agent
 
 # create symlinks for binaries
@@ -104,9 +104,9 @@ if [ $1 -ge 1 ] ; then
 fi
 
 # If uninstall remove basedir
-if [ $1 = 0 ] ; then
-    rm -rf %{basedir}/%{service_name}
-fi
+#if [ $1 = 0 ] ; then
+#    rm -rf %{basedir}/%{service_name}
+#fi
 
 %preun
 if [ $1 = 0 ] ; then
@@ -129,7 +129,7 @@ fi
 #%attr(755, root, root) %{_prefix}/local/percona/percona-agent/bin/percona-agent
 #%attr(755, root, root) %{_prefix}/local/percona/percona-agent/bin/percona-agent-installer
 %attr(755, root, root) %{_sbindir}/percona-agent
-%attr(755, root, root) %{_sbindir}/percona-agent-installer
+%attr(755, root, root) %{_bindir}/percona-agent-installer
 %attr(755, root, root) %{_sysconfdir}/init.d/percona-agent
 
 %changelog

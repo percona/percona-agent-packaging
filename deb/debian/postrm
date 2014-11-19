@@ -5,25 +5,25 @@ SERVICE_NAME=percona-agent
 BASEDIR="${PERCONA_PREFIX}/percona/${SERVICE_NAME}"
 
 case "$1" in
-	remove)
-		# delete non config files which are not automatically removed
-		rm -rf ${BASEDIR}/data
-		rm -rf ${BASEDIR}/trash
-		rm -f ${BASEDIR}/*.log
-	;;
+        remove)
+                # delete non config files which are not automatically removed
+                #rm -rf ${BASEDIR}/data
+                #rm -rf ${BASEDIR}/trash
+                #rm -f ${BASEDIR}/*.log
+        ;;
 
-	purge)
-		# delete all files including config
-		rm -rf ${BASEDIR}
-	;;
+        purge)
+                # delete all files including config
+                #rm -rf ${BASEDIR}
+        ;;
 
-	upgrade)
-	;;
+        upgrade)
+        ;;
 
-	*)
-		echo "postrm called with unknown argument \`$1'" >&2
-		exit 1
-	;;
+        *)
+                echo "postrm called with unknown argument \`$1'" >&2
+                exit 1
+        ;;
 esac
 
 # remove symlinks for service
