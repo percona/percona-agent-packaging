@@ -59,15 +59,15 @@ strings bin/percona-agent/percona-agent | grep "%{VENDOR_DIR}/src/github.com/per
 %install
 # Ensure that needed directories exists
 install -d %{buildroot}/%{_bindir}
-install -d %{buildroot}/%{_basedir}/%{service_name}
+install -d %{buildroot}/%{basedir}/%{service_name}
 
-%{__install} -D -m 755 %{CWD}/bin/percona-agent/percona-agent %{buildroot}/%{_basedir}/%{service_name}/bin/percona-agent
-%{__install} -D -m 755 %{CWD}/bin/percona-agent-installer/percona-agent-installer %{buildroot}/%{_basedir}/%{service_name}/bin/percona-agent-installer
+%{__install} -D -m 755 %{CWD}/bin/percona-agent/percona-agent %{buildroot}/%{basedir}/%{service_name}/bin/percona-agent
+%{__install} -D -m 755 %{CWD}/bin/percona-agent-installer/percona-agent-installer %{buildroot}/%{basedir}/%{service_name}/bin/percona-agent-installer
 %{__install} -D -m 755 %{CWD}/install/percona-agent %{buildroot}/%{_sysconfdir}/init.d/percona-agent
 
 # create symlinks for binaries
-ln -s %{_basedir}/percona-agent/bin/percona-agent %{buildroot}/%{_bindir}/percona-agent
-ln -s %{_basedir}/percona-agent/bin/percona-agent-installer %{buildroot}/%{_bindir}/percona-agent-installer
+ln -s %{basedir}/percona-agent/bin/percona-agent %{buildroot}/%{_bindir}/percona-agent
+ln -s %{basedir}/percona-agent/bin/percona-agent-installer %{buildroot}/%{_bindir}/percona-agent-installer
 
 %post
 # Add the init script but do not start agent right away
@@ -127,8 +127,8 @@ fi
 
 %files
 %doc COPYING README.md Changelog Authors
-%attr(755, root, root) %{_basedir}/%{service_name}/bin/percona-agent
-%attr(755, root, root) %{_basedir}/%{service_name}/bin/percona-agent-installer
+%attr(755, root, root) %{basedir}/%{service_name}/bin/percona-agent
+%attr(755, root, root) %{basedir}/%{service_name}/bin/percona-agent-installer
 %attr(755, root, root) %{_bindir}/percona-agent
 %attr(755, root, root) %{_bindir}/percona-agent-installer
 %attr(755, root, root) %{_sysconfdir}/init.d/percona-agent
