@@ -14,7 +14,7 @@ case "$1" in
 
         purge)
                 # delete all files including config
-                #rm -rf ${BASEDIR}
+                rm -rf ${BASEDIR}
         ;;
 
         upgrade)
