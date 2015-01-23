@@ -42,19 +42,19 @@ mkdir -p src/github.com/percona
 ln -s %{CWD} src/github.com/percona/percona-agent
 
 # Build a util for downloading dependencies
-(cd build/agent-build && go build)
+pushd build/agent-build && go build && popd
 
 # Download dependencies
-(cd build/agent-build && ./agent-build -build=false)
+pushd build/agent-build && ./agent-build -build=false && popd
 
 # Build percona-agent
-(cd bin/percona-agent && go build -ldflags "-X github.com/percona/percona-agent/agent.REVISION %{revision}")
+pushd bin/percona-agent && go build -ldflags "-X github.com/percona/percona-agent/agent.REVISION %{revision}" && popd
 
 # Check that bin was compiled with pkgs from vendor dir
 strings bin/percona-agent/percona-agent | grep "%{VENDOR_DIR}/src/github.com/percona/cloud-protocol" || exit 1
 
 # Build percona-agent-installer
-(cd bin/percona-agent-installer && go build)
+pushd bin/percona-agent-installer && go build && popd
 
 %install
 # Ensure that needed directories exists
