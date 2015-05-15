@@ -44,7 +44,7 @@ ln -s %{CWD} src/github.com/percona/percona-agent
 # Download dependency management tool
 go get github.com/tools/godep
 # Download package dependencies
-GOPATH=${VENDOR_DIR} ${VENDOR_DIR}/bin/godep restore
+GOPATH=%{VENDOR_DIR} %{VENDOR_DIR}/bin/godep restore
 
 # Build percona-agent
 (cd bin/percona-agent && go build -ldflags "-X github.com/percona/percona-agent/agent.REVISION %{revision}")
