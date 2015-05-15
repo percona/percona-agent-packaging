@@ -41,11 +41,10 @@ export GOPATH=%{VENDOR_DIR}:%{CWD}
 mkdir -p src/github.com/percona
 ln -s %{CWD} src/github.com/percona/percona-agent
 
-# Build a util for downloading dependencies
-(cd build/agent-build && go build)
-
-# Download dependencies
-(cd build/agent-build && ./agent-build -build=false)
+# Download dependency management tool
+go get github.com/tools/godep
+# Download package dependencies
+GOPATH=${VENDOR_DIR} ${VENDOR_DIR}/bin/godep restore
 
 # Build percona-agent
 (cd bin/percona-agent && go build -ldflags "-X github.com/percona/percona-agent/agent.REVISION %{revision}")

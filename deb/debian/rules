@@ -19,7 +19,6 @@ clean:
 	rm -rf $(CWD)/src
 	rm -rf $(CWD)/vendor
 	rm -rf $(TMP)
-	rm -f build/agent-build/agent-build
 	rm -f bin/percona-agent/percona-agent
 	rm -f bin/percona-agent-installer/percona-agent-installer
 
@@ -30,11 +29,10 @@ override_dh_auto_build:
 	mkdir -p src/github.com/percona
 	ln -s $(CWD) src/github.com/percona/percona-agent
 
-	# Build a util for downloading dependencies
-	(cd build/agent-build && go build)
-
-	# Download dependencies
-	(cd build/agent-build && ./agent-build -build=false)
+	# Download dependency management tool
+	go get github.com/tools/godep
+	# Download package dependencies
+	GOPATH=${VENDOR_DIR} ${VENDOR_DIR}/bin/godep restore
 
 	# Build percona-agent
 	(cd bin/percona-agent && go build -ldflags "-X github.com/percona/percona-agent/agent.REVISION $(REV)")
